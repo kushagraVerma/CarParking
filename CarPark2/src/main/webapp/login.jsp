@@ -7,7 +7,7 @@
 <title>Login | Car Parking Solutions</title>
 </head>
 <body>
-	<form action="Booking.jsp" method="post">
+	<form action="CredentialLogin" method="post">
 		Enter username: <input type="text" name="uname"><br>
 		Enter password: <input type="password" name="pass"><br>
 		<input type="submit" value="LOGIN">
@@ -17,7 +17,7 @@
 			out.println("Invalid login credentials!");
 			session.removeAttribute("invalid-login");
 		}
-	%>
+	%><br>
 	----OR----<br>
 	//Login with social media
 	<!-- Login with Facebook -->
