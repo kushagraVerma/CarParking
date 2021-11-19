@@ -53,4 +53,24 @@ public class User {
 	public void setCarno(String carno) {
 		this.carno = carno;
 	}
+	public void setDetails(String fn, String ln, String addr, String email, String phno, String carno) {
+		if(fn!="" && fn!=null) {
+			setFn(fn);
+		}
+		if(ln!="" && ln!=null) {
+			setLn(ln);
+		}
+		if(addr!="" && addr!=null) {
+			setAddr(addr);
+		}
+		if(email!="" && email!=null) {
+			setEmail(email);
+		}
+		if(phno!="" && phno!=null) {
+			setPhno(phno);
+		}
+		if(carno!="" && carno!=null) {
+			setCarno(carno);
+		}
+	}
 }
