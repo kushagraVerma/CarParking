@@ -21,6 +21,6 @@
 		<li>Check-out Date: <%= CoD %></li>
 		<li>Check-out Time: <%= CoT %></li>
 	</ul>
-
+	
 </body>
 </html>

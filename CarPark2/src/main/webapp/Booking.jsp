@@ -22,6 +22,7 @@
 			<input type ="date" name="DateOut" required></input></li><br>
 			<li>Check-out Time 
 			<input type ="time" name="TimeOut" required></input></li><br>
+			<input type="submit">
 		</ul>
 	</form type = "submit" >
 </body>
