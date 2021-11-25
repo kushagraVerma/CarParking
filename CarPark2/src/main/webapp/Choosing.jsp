@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import = "com.carpark.model.Park" import = "java.util.ArrayList"%>
+<%@taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+ 
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,19 +10,21 @@
 </head>
 <body>
 	<h1>Choose your Parking Spot</h1>
-	<% String Loc = request.getParameter("Location"); %>
-	<% String CiD = request.getParameter("DateIn"); %>
-	<% String CiT = request.getParameter("TimeIn"); %>
-	<% String CoD = request.getParameter("DateOut"); %>
-	<% String CoT = request.getParameter("TimeOut"); %>
+	<% String Loc = (String)session.getAttribute("Location"); %>
+	<% String CiDT = (String)session.getAttribute("DateTimeIn"); %>
+	<% String CoDT = (String)session.getAttribute("DateTimeOut"); %>
 	<h3>Your Current Details:</h3>
 	<ul style="list-style-type:none;">
 		<li>Location: <%=Loc %></li>
-		<li>Check-in Date: <%= CiD %></li>
-		<li>Check-in Time: <%= CiT %></li>
-		<li>Check-out Date: <%= CoD %></li>
-		<li>Check-out Time: <%= CoT %></li>
+		<li>Check-in Date and Time: <%= CiDT %></li>
+		<li>Check-out Date and Time: <%= CoDT %></li>
 	</ul>
-	
+	<%-- <form>
+	<c:forEach items="${ParkingList}" var="u">
+		<input type = "button">
+		${s} <br>
+		</input >
+	</c:forEach>
+	</form> --%>
 </body>
 </html>

@@ -53,4 +53,5 @@ public class User {
 	public void setCarno(String carno) {
 		this.carno = carno;
 	}
+	
 }

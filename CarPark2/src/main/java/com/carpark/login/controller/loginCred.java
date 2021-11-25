@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import com.carpark.login.dao.*;
 import com.carpark.model.User;
 
-
 @WebServlet("/CredentialLogin")
 public class loginCred extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,5 +27,4 @@ public class loginCred extends HttpServlet {
 			response.sendRedirect("login.jsp");			
 		}
 	}
-
 }

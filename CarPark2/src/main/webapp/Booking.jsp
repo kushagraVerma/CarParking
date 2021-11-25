@@ -9,19 +9,15 @@
 <body>
 <% String userid = request.getParameter("uname"); %>
 	<h1>Welcome, <%=userid %>!</h1>
-	<form action = "Choosing.jsp">
+	<form action = "BookingDetails" method ="post">
 		<ul style="list-style-type:none;">
 			<li>Location 
 			<input type="range" id="Location" name="Location" min="1" max="5" step="1"></input>
 	        </li><br>
-    	    <li>Check-in Date 
-			<input type ="date" name="DateIn" required></input></li><br>
-			<li>Check-in Time
-			<input type ="time" name="TimeIn" required></input></li><br>
-			<li>Check-out Date 
-			<input type ="date" name="DateOut" required></input></li><br>
-			<li>Check-out Time 
-			<input type ="time" name="TimeOut" required></input></li><br>
+    	    <li>Check-in Date and Time		<!-- Add only future dates -->
+			<input type ="datetime-local" name="DateTimeIn" required></input></li><br>
+			<li>Check-out Date and Time
+			<input type ="datetime-local" name="DateTimeOut" required></input></li><br>
 			<input type="submit">
 		</ul>
 	</form type = "submit" >
