@@ -25,9 +25,12 @@ public class ParkDAO {
 			st.setString(1, CoDT);
 			st.setString(2, CiDT);
 			st.setString(3, Loc);
-			ResultSet rs = st.executeQuery();
+			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				Park Slot = new Park(Loc, CiDT, CoDT);
+				if(rs.getString("booking.pid")!=null) {
+					Slot.setPID(rs.getString("booking.pid"));
+				}
 				if(rs.getString("Location")!=null) {
 					Slot.setLoc(rs.getString("Location"));
 				}

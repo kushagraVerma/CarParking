@@ -12,7 +12,12 @@
 	<form action = "BookingDetails" method ="post">
 		<ul style="list-style-type:none;">
 			<li>Location 
-			<input type="range" id="Location" name="Location" min="1" max="5" step="1"></input>
+			<label> Select Location </label>  
+			<select>  
+			<option value = "Delhi"> Delhi </option>  
+			<option value = "Hyderabad"> Hyderabad </option>  
+			<option value = "Lucknow"> Lucknow </option>
+			</select>  
 	        </li><br>
     	    <li>Check-in Date and Time		<!-- Add only future dates -->
 			<input type ="datetime-local" name="DateTimeIn" required></input></li><br>

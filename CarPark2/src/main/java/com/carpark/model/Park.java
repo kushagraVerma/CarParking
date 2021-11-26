@@ -1,7 +1,13 @@
 package com.carpark.model;
 
 public class Park {
-	private String Loc, DTin, DTout, Emt;
+	private String PID, Loc, DTin, DTout, Emt;
+	public String getPID() {
+		return PID;
+	}
+	public void setPID(String pID) {
+		PID = pID;
+	}
 	public String getEmt() {
 		return Emt;
 	}
@@ -29,7 +35,8 @@ public class Park {
 	public void setDTout(String DTout) {
 		this.DTout = DTout;
 	}
-	public void setDetails(String Loc, String DTin, String DTout) {
+	public void setDetails(String pID, String Loc, String DTin, String DTout) {
+		if(pID!=null || pID!="")		setPID(pID);
 		if(Loc!=null || Loc!="")		setLoc(Loc);
 		if(DTin!=null || DTin!="")		setDTin(DTin);
 		if(DTout!=null || DTout!="")	setDTout(DTout);
@@ -37,7 +44,7 @@ public class Park {
 	}
 	@Override
 	public String toString() {
-		return "Park [Location=" + Loc + ", Check-in DateTime=" + DTin + ", Check-out DateTime=" + DTout + ", Available=" + Emt + "]";
+		return "Park [PID=" + PID + ", Location=" + Loc + ", Check-In Date and Time=" + DTin + ", Check-Out Date and Time=" + DTout+" ]";
 	}
 	
 }
