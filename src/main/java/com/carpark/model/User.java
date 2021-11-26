@@ -2,8 +2,10 @@ package com.carpark.model;
 
 public class User {
 	private String fn,ln,un,pw,addr,email,phno,carno,logw;
-	public User(String UN) {
-		un = UN;
+	public User(String from, String entry) {
+		if(from.equals("uname")) un = entry;
+		if(from.equals("email")) email = entry;
+		
 	}
 	public String getFn() {
 		return fn;
@@ -59,15 +61,16 @@ public class User {
 	public void setLogw(String logw) {
 		this.logw = logw;
 	}
-	public void setDetails(String Fn, String Ln, String Pw, String Ad, String Em, String Ph, String Cr, String Lw) {
-		if(Fn!=null || Fn!="") setFn(Fn);
-		if(Ln!=null || Ln!="") setLn(Ln);
-		if(Pw!=null || Pw!="") setPw(Pw);
-		if(Ad!=null || Ad!="") setAddr(Ad);
-		if(Em!=null || Em!="") setEmail(Em);
-		if(Ph!=null || Ph!="") setPhno(Ph);
-		if(Cr!=null || Cr!="") setCarno(Cr);
-		if(Lw!=null || Lw!="") setLogw(Lw);
+	public void setDetails(String Fn, String Ln, String Un, String Pw, String Ad, String Em, String Ph, String Cr, String Lw) {
+		if(Fn!=null && !Fn.equals("")) setFn(Fn);
+		if(Ln!=null && !Ln.equals("")) setLn(Ln);
+		if(Un!=null && !Un.equals("")) setUn(Un);
+		if(Pw!=null && !Pw.equals("")) setPw(Pw);
+		if(Ad!=null && !Ad.equals("")) setAddr(Ad);
+		if(Em!=null && !Em.equals("")) setEmail(Em);
+		if(Ph!=null && !Ph.equals("")) setPhno(Ph);
+		if(Cr!=null && !Cr.equals("")) setCarno(Cr);
+		if(Lw!=null && !Lw.equals("")) setLogw(Lw);
 	}
 	@Override
 	public String toString() {

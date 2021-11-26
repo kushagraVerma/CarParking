@@ -58,14 +58,13 @@
 		    	</form>
 		    </c:when>
 		</c:choose>
-	<%
+	<div><%
 		String inval = (String) session.getAttribute("invalid-reg");
 		if(inval!=null){
 			out.println(inval);
 			session.removeAttribute("invalid-reg");
 		}
-	%><br>
-	----OR----<br>
+	%></div><br>
 
 </body>
 </html>

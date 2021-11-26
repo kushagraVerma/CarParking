@@ -18,7 +18,7 @@ public class LoginCred extends HttpServlet {
 		String pass = request.getParameter("pass");
 		HttpSession session = request.getSession();
 		UserDAO udao = new UserDAO();
-		User u = udao.fromUname(uname);
+		User u = udao.fromCreds(uname,pass);
 		if(u!=null) {
 			session.setAttribute("user",u);
 			response.sendRedirect("home.jsp");

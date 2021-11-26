@@ -28,8 +28,8 @@ public class RegCred extends HttpServlet {
 		String ph = request.getParameter("phno");
 		String cr = request.getParameter("carno");
 		
-		User u = new User(un);
-		u.setDetails(fn, ln, p, ad, em, ph, cr, "Cred");
+		User u = new User("uname",un);
+		u.setDetails(fn, ln,"", p, ad, em, ph, cr, "Cred");
 		session.setAttribute("new-user", u);
 		
 		boolean error = false;
