@@ -18,13 +18,13 @@
 			<option value = "Hyderabad"> Hyderabad </option>  
 			<option value = "Lucknow"> Lucknow </option>
 			</select>  
-	        </li><br>
+	        </li>
     	    <li>Check-in Date and Time		<!-- Add only future dates -->
-			<input type ="datetime-local" name="DateTimeIn" required></input></li><br>
+			<input type ="datetime-local" name="DateTimeIn" required></input></li>
 			<li>Check-out Date and Time
-			<input type ="datetime-local" name="DateTimeOut" required></input></li><br>
-			<input type="submit">
+			<input type ="datetime-local" name="DateTimeOut" required></input></li>
 		</ul>
-	</form type = "submit" >
+		<input type = "submit">
+	</form>
 </body>
 </html>

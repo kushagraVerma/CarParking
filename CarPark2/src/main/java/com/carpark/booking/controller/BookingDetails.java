@@ -18,16 +18,10 @@ import com.carpark.model.Park;
  */
 @WebServlet("/BookingDetails")
 public class BookingDetails extends HttpServlet {
+		/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public class bookingDetails extends HttpServlet {
-    	/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
 
 		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     		String Loc = request.getParameter("Location");
@@ -44,5 +38,4 @@ public class BookingDetails extends HttpServlet {
     			response.sendRedirect("Choosing.jsp");
     		}
     	}
-    }
 }
