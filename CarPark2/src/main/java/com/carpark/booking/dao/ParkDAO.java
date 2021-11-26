@@ -14,7 +14,7 @@ public class ParkDAO {
 	String username = "root";
 	String password = "1234";
 	public ArrayList<Park> fromBooking(String Loc, String CiDT, String CoDT) {
-		String sql = "select booking.pid,cin,cout,(cin>? or cout<?) as Available from booking where pid in (select pid from parkspace where loc=?);;";
+		String sql = "select booking.pid,cin,cout,(cin>? or cout<?) as Available from booking where pid in (select pid from parkspace where loc=?);";
 		Connection con = null;
 		PreparedStatement st = null;
 		try {
@@ -25,7 +25,7 @@ public class ParkDAO {
 			st.setString(1, CoDT);
 			st.setString(2, CiDT);
 			st.setString(3, Loc);
-			ResultSet rs = st.executeQuery(sql);
+			ResultSet rs = st.executeQuery();
 			while(rs.next()) {
 				Park Slot = new Park(Loc, CiDT, CoDT);
 				if(rs.getString("booking.pid")!=null) {

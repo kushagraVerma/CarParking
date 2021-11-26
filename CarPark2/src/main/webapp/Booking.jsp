@@ -13,7 +13,7 @@
 		<ul style="list-style-type:none;">
 			<li>Location 
 			<label> Select Location </label>  
-			<select>  
+			<select name="Location" >  
 			<option value = "Delhi"> Delhi </option>  
 			<option value = "Hyderabad"> Hyderabad </option>  
 			<option value = "Lucknow"> Lucknow </option>

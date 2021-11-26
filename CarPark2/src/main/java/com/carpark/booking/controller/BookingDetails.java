@@ -37,5 +37,7 @@ public class BookingDetails extends HttpServlet {
     			session.setAttribute("DateTimeOut", CoDT);
     			response.sendRedirect("Choosing.jsp");
     		}
+    		else
+    			System.out.println("NULL!");
     	}
 }
