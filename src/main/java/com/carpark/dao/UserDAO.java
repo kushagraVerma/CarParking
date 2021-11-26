@@ -65,8 +65,8 @@ public class UserDAO {
 			}
 		}
 	}
-	public User fromUname(String uname) {
-		String sql = "select * from UserReg where uname=?";
+	public User fromCreds(String uname, String pass) {
+		String sql = "select * from UserReg where uname=? and pass=?";
 		Connection con = null;
 		PreparedStatement st = null;
 		try {
@@ -74,15 +74,54 @@ public class UserDAO {
 			con = DriverManager.getConnection(url,username,password);
 			st = con.prepareStatement(sql);
 			st.setString(1, uname);
+			st.setString(2, pass);
 			ResultSet rs = st.executeQuery();
 			if(rs.next()) {
-				User u = new User(uname);
+				User u = new User("uname",uname);
 				u.setDetails(
 						rs.getString("fname"),
 						rs.getString("lname"),
-						rs.getString("pass"),
+						"",
+						pass,
 						rs.getString("address"),
 						rs.getString("email"),
+						rs.getString("phno"),
+						rs.getString("carno"),
+						rs.getString("loginw")
+					);
+				return u;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	public User fromNonCred(String email) {
+		String sql = "select * from UserReg where email=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			st.setString(1, email);
+			ResultSet rs = st.executeQuery();
+			if(rs.next()) {
+				User u = new User("email",email);
+				u.setDetails(
+						rs.getString("fname"),
+						rs.getString("lname"),
+						email,
+						"",
+						rs.getString("address"),
+						"",
 						rs.getString("phno"),
 						rs.getString("carno"),
 						rs.getString("loginw")
