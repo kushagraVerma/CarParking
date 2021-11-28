@@ -4,19 +4,19 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Admin Login</title>
+<title>Worker Login</title>
 </head>
 <body>
-	<form action="AdmLogin" method="post">
+	<form action="WrkLogin" method="post">
 		Enter username: <input type="text" name="uname"><br>
 		Enter password: <input type="password" name="pass"><br>
 		<input type="submit" value="LOGIN">
 	</form><br>
 	<div><%
-		String inval = (String) session.getAttribute("invalid-admlogin");
+		String inval = (String) session.getAttribute("invalid-wrklogin");
 		if(inval!=null){
 			out.println(inval);
-			session.removeAttribute("invalid-admlogin");
+			session.removeAttribute("invalid-wrklogin");
 		}
 	%></div>
 </body>
