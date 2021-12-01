@@ -1,7 +1,9 @@
 package com.carpark.booking.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,18 +26,37 @@ public class BookingDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    		String Loc = request.getParameter("Location");
-    		String CiDT = request.getParameter("DateTimeIn");
-    		String CoDT = request.getParameter("DateTimeOut");
     		HttpSession session = request.getSession();
-    		ParkDAO pdao = new ParkDAO();
-    		ArrayList<Park> p = pdao.fromBooking(Loc, CiDT, CoDT);
-    		if(p!=null) {
-    			session.setAttribute("ParkingList", p);
-    			session.setAttribute("Location", Loc);
-    			session.setAttribute("DateTimeIn", CiDT);
-    			session.setAttribute("DateTimeOut", CoDT);
-    			response.sendRedirect("Choosing.jsp");
-    		}else System.out.println("NULL!");
+			
+			String Loc = request.getParameter("Location");
+    		String Dt = request.getParameter("Date");
+    		String TIn = request.getParameter("TIn");
+    		String TOut = request.getParameter("TOut");
+
+    		boolean valid = true;
+    		String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+    		if(today.compareTo(Dt)>=0) {
+    			valid = false;
+    			session.setAttribute("invalid-dt", "Past date selected");
+    		}
+    		if(TIn.compareTo(TOut)>=0) {
+    			valid = false;
+    			session.setAttribute("invalid-dt", "Check-in time must be before check-out time");
+    		}
+    		if(valid) {        		
+        		String CiDT = Dt + " " + TIn;
+        		String CoDT = Dt + " " + TOut;
+        		ParkDAO pdao = new ParkDAO();
+        		ArrayList<Park> p = pdao.fromBooking(Loc, CiDT, CoDT);
+        		if(p!=null) {
+        			session.setAttribute("ParkingList", p);
+        			session.setAttribute("Location", Loc);
+        			session.setAttribute("DateTimeIn", CiDT);
+        			session.setAttribute("DateTimeOut", CoDT);
+        			response.sendRedirect("Choosing.jsp");
+        		}else System.out.println("NULL!");
+    		}else {
+    			response.sendRedirect("Booking.jsp");
+    		}
     	}
 }

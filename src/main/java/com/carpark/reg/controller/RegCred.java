@@ -29,7 +29,7 @@ public class RegCred extends HttpServlet {
 		String cr = request.getParameter("carno");
 		
 		User u = new User("uname",un);
-		u.setDetails(fn, ln,"", p, ad, em, ph, cr, "Cred");
+		u.setDetails(fn, ln,"", p, ad, em, ph, cr, "C");
 		session.setAttribute("new-user", u);
 		
 		boolean error = false;
@@ -70,8 +70,10 @@ public class RegCred extends HttpServlet {
 		}else {
 			String Otp = OTPsender.generate(6);
 			if(request.getParameter("emlOTP")!=null) {
+				u.setLogw("CE");
 				OTPsender.send(Otp, "mail", em);
 			}else if(request.getParameter("smsOTP")!=null) {
+				u.setLogw("CP");
 				OTPsender.send(Otp, "sms", ph);
 			}
 			session.setAttribute("OTP", Otp);
