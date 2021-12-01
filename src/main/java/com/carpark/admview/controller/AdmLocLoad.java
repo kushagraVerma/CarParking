@@ -1,4 +1,4 @@
-package com.carpark.booking.controller;
+package com.carpark.admview.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,15 +12,14 @@ import javax.servlet.http.HttpSession;
 
 import com.carpark.dao.ParkDAO;
 
-@WebServlet("/LocLoad")
-public class LocLoad extends HttpServlet {
+@WebServlet("/AdmLocLoad")
+public class AdmLocLoad extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String redir = request.getParameter("redir");
 		ParkDAO pdao = new ParkDAO();
 		ArrayList<String> locs = pdao.getLocs();
 		session.setAttribute("locList", locs);
-		response.sendRedirect("Booking.jsp");
+		response.sendRedirect("viewpark.jsp");
 	}
 
 }

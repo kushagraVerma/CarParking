@@ -21,14 +21,15 @@
 		User u = (User) session.getAttribute("user");
 		if(u==null){
 			response.sendRedirect("login.jsp");
-		}else{
-			
-		}
-		if(session.getAttribute("locList")==null){
+			return;
+		}else if(session.getAttribute("locList")==null){
 			response.sendRedirect("LocLoad");
+			return;
+		}else{
+			//System.out.println(u);
 		}
 	%>
-	<h1>Welcome, <%=u.getFn() %>!</h1>
+	<h1>Welcome, <%= u.getFn() %>!</h1>
 	<form action = "BookingDetails" method ="get">
 		<ul style="list-style-type:none;">
 			<li>Location 
@@ -39,13 +40,39 @@
 			</c:forEach>
 			</select>  
 	        </li>
-    	    <li>Check-in Date and Time		<!-- Add only future dates -->
+    	    <!-- <li>Check-in Date and Time		Add only future dates
 			<input type ="datetime-local" name="DateTimeIn" required></input></li>
 			<li>Check-out Date and Time
-			<input type ="datetime-local" name="DateTimeOut" required></input></li>
+			<input type ="datetime-local" name="DateTimeOut" required></input></li> -->
+			<input type="date" name="Date" required>
+			From: <select type="time" id="TIn" name="TIn"></select>
+			To: <select type="time" id="TOut" name="TOut"></select>
 		</ul>
 		<input type = "submit">
 	</form>
+	<div><%
+	if(session.getAttribute("invalid-dt")!=null){
+		out.println(session.getAttribute("invalid-dt"));
+	}
+	session.removeAttribute("invalid-dt");
+	%></div><br>
+	<script>
+	function addTimeOpt(selID,time){
+		if(time.length<5){
+			time = "0"+time;
+		}
+		let opt = document.createElement('option');
+		opt.value = time;
+		opt.innerHTML = time;
+		document.getElementById(selID).add(opt);
+	}
+	for(let i = 8; i < 24; i++){
+		addTimeOpt("TIn",i+":00");
+		addTimeOpt("TIn",i+":30");
+		addTimeOpt("TOut",i+":00");
+		addTimeOpt("TOut",i+":30");
+	}
+	</script>
 	<% session.removeAttribute("locList"); %>
 	<form name="logoutForm" action="Logout" method="post"></form>
    <button onclick="myFunction()">Sign Out</button>

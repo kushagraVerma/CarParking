@@ -2,6 +2,13 @@ package com.carpark.model;
 
 public class User {
 	private String fn,ln,un,pw,addr,email,phno,carno,logw;
+	int uid;
+	public int getUid() {
+		return uid;
+	}
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
 	public User(String from, String entry) {
 		if(from.equals("uname")) un = entry;
 		if(from.equals("email")) email = entry;

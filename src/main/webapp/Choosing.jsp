@@ -22,8 +22,11 @@
 		User u = (User) session.getAttribute("user");
 		if(u==null){
 			response.sendRedirect("login.jsp");
-		}else{
-			
+			return;
+		}
+		if(session.getAttribute("ParkingList")==null){
+			response.sendRedirect("Booking.jsp");
+			return;
 		}
 	%>
 	<h1>Choose your Parking Spot</h1>
@@ -36,19 +39,39 @@
 		<li>Check-in Date and Time: <%= CiDT %></li>
 		<li>Check-out Date and Time: <%= CoDT %></li>
 	</ul>
-	<form>
-	<c:forEach items="${ParkingList}" var="pspace">
-		<c:choose>
-		  <c:when test="${pspace.getEmt().equals(\"0\")}" >
-			<input type="button" value="${pspace.getPID()}" disabled>
-		  </c:when>
-		  <c:otherwise>
-			<input type="button" value="${pspace.getPID()}">
-		  </c:otherwise>
-		</c:choose>
-		
-	</c:forEach>
+	<h3>Following parking spaces are available:</h3><br>
+	<table>
+		<c:forEach items="${ParkingList}" var="pspace">
+			<c:choose>
+		  	<c:when test="${pspace.getEmt()==0}" >
+				<tr style = "background-color : red">
+					<td>${pspace.getPID()}</td>
+					<td>${pspace.getCost()}</td>
+					<td>${pspace.getWaitingTime()}</td>
+					<td><button disabled>Unavailable</button></td>
+				</tr>
+		  	</c:when>
+		 	<c:otherwise>
+				<tr style = "background-color : green">
+					<td>${pspace.getPID()}</td>
+					<td>${pspace.getCost()}</td>
+					<td>0</td>
+					<td><button onclick="clickAvailable(${pspace.getPID()})">Available</button></td>
+				</tr>
+		  	</c:otherwise>
+			</c:choose>
+		</c:forEach>
+	</table>
+	<form name="payForm" action="GoToPay" method="post">
+	<input type="hidden" name="Pid">
 	</form>
+	<script>
+		function clickAvailable(Psp){
+			console.log(Psp);
+			document.payForm.Pid.value = Psp;
+			document.payForm.submit()
+		}
+	</script>
 	<form name="logoutForm" action="Logout" method="post"></form>
    <button onclick="myFunction()">Sign Out</button>
 </body>
