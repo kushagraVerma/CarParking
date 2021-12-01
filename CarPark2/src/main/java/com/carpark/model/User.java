@@ -1,9 +1,11 @@
 package com.carpark.model;
 
 public class User {
-	private String fn,ln,un,pw,addr,email,phno,carno;
-	public User(String UN, String PW) {
-		un = UN; pw = PW;
+	private String fn,ln,un,pw,addr,email,phno,carno,logw;
+	public User(String from, String entry) {
+		if(from.equals("uname")) un = entry;
+		if(from.equals("email")) email = entry;
+		
 	}
 	public String getFn() {
 		return fn;
@@ -53,5 +55,26 @@ public class User {
 	public void setCarno(String carno) {
 		this.carno = carno;
 	}
-	
+	public String getLogw() {
+		return logw;
+	}
+	public void setLogw(String logw) {
+		this.logw = logw;
+	}
+	public void setDetails(String Fn, String Ln, String Un, String Pw, String Ad, String Em, String Ph, String Cr, String Lw) {
+		if(Fn!=null && !Fn.equals("")) setFn(Fn);
+		if(Ln!=null && !Ln.equals("")) setLn(Ln);
+		if(Un!=null && !Un.equals("")) setUn(Un);
+		if(Pw!=null && !Pw.equals("")) setPw(Pw);
+		if(Ad!=null && !Ad.equals("")) setAddr(Ad);
+		if(Em!=null && !Em.equals("")) setEmail(Em);
+		if(Ph!=null && !Ph.equals("")) setPhno(Ph);
+		if(Cr!=null && !Cr.equals("")) setCarno(Cr);
+		if(Lw!=null && !Lw.equals("")) setLogw(Lw);
+	}
+	@Override
+	public String toString() {
+		return "User [fn=" + fn + ", ln=" + ln + ", un=" + un + ", pw=" + pw + ", addr=" + addr + ", email=" + email
+				+ ", phno=" + phno + ", carno=" + carno + ", logw=" + logw + "]";
+	}
 }
