@@ -13,7 +13,7 @@ import com.carpark.dao.WorkerDAO;
 public class RemoveWorker extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		WorkerDAO wdao = new WorkerDAO();
-		wdao.removeFromID(Integer.parseInt(request.getParameter("wid")));
+		wdao.removeWorker(Integer.parseInt(request.getParameter("wid")));
 		response.sendRedirect("LoadWorkers");
 	}
 

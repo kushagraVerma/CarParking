@@ -50,6 +50,14 @@ public class BookingDetails extends HttpServlet {
         		ArrayList<Park> p = pdao.fromBooking(Loc, CiDT, CoDT);
         		if(p!=null) {
         			session.setAttribute("ParkingList", p);
+        			boolean showWaiting = true;
+        			for(Park park : p) {
+        				if(park.getEmt()==1) {
+        					showWaiting = false;
+        					break;
+        				}
+        			}
+        			if(showWaiting) session.setAttribute("showWaiting", true);
         			session.setAttribute("Location", Loc);
         			session.setAttribute("DateTimeIn", CiDT);
         			session.setAttribute("DateTimeOut", CoDT);

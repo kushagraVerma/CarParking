@@ -7,10 +7,7 @@ import java.sql.ResultSet;
 
 import com.carpark.model.User;
 
-public class UserDAO {
-	final private static String url = "jdbc:mysql://localhost:3306/carpark";
-	final private static String username = "root";
-	final private static String password = "1234";
+public class UserDAO implements DAO{
 	public static boolean alreadyExists(String field, String entry) {
 		String sql = "select "+field+" from UserReg where "+field+"=?";
 		Connection con = null;

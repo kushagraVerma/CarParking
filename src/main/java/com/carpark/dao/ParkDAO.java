@@ -8,15 +8,11 @@ import java.util.ArrayList;
 
 import com.carpark.model.Park;
 
-public class ParkDAO {
-	//java.util.Date dt = new java.util.Date();
-	String url = "jdbc:mysql://localhost:3306/carpark";
-	String username = "root";
-	String password = "1234";
+public class ParkDAO implements DAO{
 	public ArrayList<Park> fromBooking(String Loc, String CiDT, String CoDT) {
-		String sql = "select parkspace.pid as parkid,cin,max(cout) as cout,avg(cin>? or cout<?)=1 as available,uid "
-				+ "from parkspace,booking "
-				+ "where parkspace.pid=booking.pid and loc=? "
+		String sql = "select parkspace.pid as parkid,cin,max(cout) as cout,avg(cin>? or cout<?)=1 as available,uid,rating,services "
+				+ "from parkspace,booking,workers "
+				+ "where parkspace.pid=booking.pid and parkspace.pid=workers.pid and loc=? "
 				+ "group by parkid";
 		//String sql = "select booking.pid,cin,cout,(cin>? or cout<?) as Available from booking where pid in (select pid from parkspace where loc=?);";
 		Connection con = null;
@@ -45,7 +41,8 @@ public class ParkDAO {
 				Slot.getWaitingTime(CiDT);
 				Slot.setUid(rs.getInt("uid"));
 				Slot.setEmt(rs.getInt("available"));
-				Slot.setCost(Park.getBill(CiDT, CoDT));
+				Slot.setRating(rs.getFloat("rating"));
+				Slot.setServStr(rs.getString("services"));
 				p.add(Slot);
 			}
 			return p;
@@ -76,6 +73,41 @@ public class ParkDAO {
 				locs.add(rs.getString("location"));
 			}
 			return locs;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	public ArrayList<Park> getBookings(int Uid) {
+		String sql = "select booking.pid as parkid,loc,cin,cout from booking,parkspace "
+				+ "where booking.pid=parkspace.pid and uid=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			ArrayList<Park> bookings = new ArrayList<Park>();
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			st.setInt(1, Uid);
+			ResultSet rs = st.executeQuery();
+			while(rs.next()) {
+				Park p = new Park(
+						rs.getString("loc"),
+						rs.getString("cin"),
+						rs.getString("cout")
+					);
+				bookings.add(p);
+			}
+			return bookings;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -128,6 +160,92 @@ public class ParkDAO {
 			st.setString(2, slot.getDTin());
 			st.setString(3, slot.getDTout());
 			st.setInt(4, slot.getUid());
+			st.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void addParkspace(String Loc) {
+		String sql = "insert into parkspace (loc) values(?)";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			st.setString(1, Loc);
+			st.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void assignWorker(String Pid, int Wid) {
+		String sql = "update parkspace set wid=? where pid=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			st.setInt(1, Wid);
+			st.setInt(2, Integer.parseInt(Pid));
+			st.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void removeParkspace(String Pid) {
+		String sql = "delete from parkspace where pid=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			st.setInt(1, Integer.parseInt(Pid));
+			st.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void removeBooking(String Pid, String Cout) {
+		String sql = "delete from booking where pid=? and cout=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			st.setInt(1, Integer.parseInt(Pid));
+			st.setString(2, Cout);
 			st.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();

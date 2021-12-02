@@ -27,19 +27,18 @@
 	Your parking space: <% out.println(w.getPid()); %><br>
 	Services you provide:<br>
 	<form action="UpdateServices" method="post">
-		<%
-		for(int i = 0; i < 4; i++){
-			String name = "\"Serv"+i+"\"";
-			String lbl = "<label for="+name+">"+Worker.servNames[i]+": </label>";
-			out.println(lbl);
-			String box = "<input type=\"checkbox\" name="+name+" value="+name;
-			if(servs[i]){
-				box += " checked";
-			}
-			box += ">";
-			out.println(box);
-		}
-		%>
+		<c:forEach var="i" begin="0" end="3">
+			<label for="Serv${i}">${Worker.servNames[i]}</label>
+			<c:choose>
+				<c:when test="${worker.getServices().charAt(i)-'0'>48}">
+					<input type="checkbox" name="Serv${i}" value="Serv${i}" checked>
+				</c:when>
+				<c:otherwise>
+					<input type="checkbox" name="Serv${i}" value="Serv${i}">
+				</c:otherwise>
+			</c:choose>
+			<br>
+		</c:forEach>
 		<br>
 		<input type="submit" value="UPDATE">
 	</form>
