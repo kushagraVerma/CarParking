@@ -6,11 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import com.carpark.billing.model.Link;
+import com.carpark.dao.DAO;
 
-public class LinkDAO {
-	final private static String url = "jdbc:mysql://localhost:3306/carpark";
-	final private static String username = "root";
-	final private static String password = "1234";
+public class LinkDAO implements DAO{
 	public int getWid(String Link) {
 		String sql = "select wid from links where link=?";
 		Connection con = null;

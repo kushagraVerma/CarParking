@@ -7,10 +7,7 @@ import java.sql.ResultSet;
 
 import com.carpark.model.Admin;
 
-public class AdminDAO {
-	final private static String url = "jdbc:mysql://localhost:3306/carpark";
-	final private static String username = "root";
-	final private static String password = "1234";
+public class AdminDAO implements DAO {
 	public Admin fromCreds(String uname, String pass) {
 		String sql = "select * from AdminCred where uname=? and pass=?";
 		Connection con = null;

@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1" import = "com.carpark.model.Park" import = "java.util.ArrayList"%>
 <%@taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ page import="com.carpark.model.User" %>
+<%@ page import="com.carpark.model.Worker" %>
  
 <!DOCTYPE html>
 <html>
@@ -40,7 +41,15 @@
 		<li>Check-out Date and Time: <%= CoDT %></li>
 	</ul>
 	<h3>Following parking spaces are available:</h3><br>
-	<table>
+	<table border="1px solid black">
+		<tr>
+			<th>Parking Space</th>
+			<th>Cost</th>
+			<th>Waiting Time</th>
+			<th>Rating</th>
+			<th>Services</th>
+			<th>Availability</th>
+		</tr>
 		<c:forEach items="${ParkingList}" var="pspace">
 			<c:choose>
 		  	<c:when test="${pspace.getEmt()==0}" >
@@ -48,6 +57,16 @@
 					<td>${pspace.getPID()}</td>
 					<td>${pspace.getCost()}</td>
 					<td>${pspace.getWaitingTime()}</td>
+					<td>${pspace.getRating() }</td>
+					<td>
+						<c:forEach var="i" begin="1" end="3">
+							<c:choose>
+								<c:when test="${pspace.getServStr().charAt(i)=='1'}">
+									<c:out value="${Worker.servNames[i]}"></c:out>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+					</td>
 					<td><button disabled>Unavailable</button></td>
 				</tr>
 		  	</c:when>
@@ -56,20 +75,42 @@
 					<td>${pspace.getPID()}</td>
 					<td>${pspace.getCost()}</td>
 					<td>0</td>
+					<td>${pspace.getRating() }</td>
+					<td>
+						<c:forEach var="i" begin="0" end="3">
+							<c:choose>
+								<c:when test="${pspace.getServStr().charAt(i)-'0'>48}">
+									<c:out value="${Worker.servNames[i]}"></c:out>
+									<br>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+					</td>
 					<td><button onclick="clickAvailable(${pspace.getPID()})">Available</button></td>
 				</tr>
 		  	</c:otherwise>
 			</c:choose>
 		</c:forEach>
 	</table>
+	<%
+		if(session.getAttribute("showWaiting")!=null){
+			out.println("Join waiting list: <button onclick=\"toWaiting()\">JOIN</button>");
+			session.removeAttribute("showWaiting");
+		}
+	%>
 	<form name="payForm" action="GoToPay" method="post">
-	<input type="hidden" name="Pid">
+		<input type="hidden" name="Pid">
+	</form>
+	<form name="waitForm" action="AddWaiting" method="post">
 	</form>
 	<script>
 		function clickAvailable(Psp){
 			console.log(Psp);
 			document.payForm.Pid.value = Psp;
 			document.payForm.submit()
+		}
+		function toWaiting(){
+			document.waitForm.submit()
 		}
 	</script>
 	<form name="logoutForm" action="Logout" method="post"></form>

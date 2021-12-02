@@ -8,10 +8,7 @@ import java.util.ArrayList;
 
 import com.carpark.model.Worker;
 
-public class WorkerDAO {
-	final private static String url = "jdbc:mysql://localhost:3306/carpark";
-	final private static String username = "root";
-	final private static String password = "1234";
+public class WorkerDAO implements DAO{
 
 	public Worker fromCreds(String uname, String pass) {
 		String sql = "select * from Workers where uname=? and pass=?";
@@ -91,7 +88,53 @@ public class WorkerDAO {
 		}
 		return null;
 	}
-	public void removeFromID(int Wid) {
+	public void addWorker(String Uname, String Pass, String Fname, String Joined) {
+		String sql = "insert into workers (uname,pass,fname,joined) values(?,?,?,?)";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			st.setString(1, Uname);
+			st.setString(2, Pass);
+			st.setString(3, Fname);
+			st.setString(4, Joined);
+			st.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void assignParkspace(String Pid, int Wid) {
+		String sql = "update workers set pid=? where wid=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			st.setInt(1, Integer.parseInt(Pid));
+			st.setInt(2, Wid);
+			st.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void removeWorker(int Wid) {
 		String sql = "delete from Workers where wid=?";
 		Connection con = null;
 		PreparedStatement st = null;

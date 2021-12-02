@@ -24,10 +24,19 @@
 			
 		}
 	%><br>
-	<form name="bookForm" action="LocLoad" method="get"></form>
-	<button onclick="document.bookForm.submit()">BOOK</button>
+	<!-- <form name="bookForm" action="LocLoad" method="get"></form>
+	<button onclick="document.bookForm.submit()">BOOK</button> -->
+	<a href="Booking.jsp">Book</a><br>
+	<a href="mybookings.jsp">My Bookings</a><br>
+	<a href="raiserequest.jsp">Raise a Request</a><br>
+	<a href="">Promo Codes</a><br><br>
 	<form name="logoutForm" action="Logout" method="post"></form>
    <button onclick="myFunction()">Sign Out</button>
+   
+   <%
+   	session.removeAttribute("Bookings");
+  	session.removeAttribute("Waits");
+   %>
 
 </body>
 </html>

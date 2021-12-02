@@ -1,14 +1,18 @@
 package com.carpark.model;
 
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.*;
 
 public class Park {
-	private String PID, Loc, DTin, DTout;
+	private String PID, Loc, DTin, DTout, servStr;
 	private double Cost;
+	private float rating;
 	private int uid, Emt, WaitingTime;
+	public String getServStr() {
+		return servStr;
+	}
+	public void setServStr(String servStr) {
+		this.servStr = servStr;
+	}
 	public int getUid() {
 		return uid;
 	}
@@ -17,6 +21,7 @@ public class Park {
 	}
 	public Park(String Location, String DateTimeIn, String DateTimeOut) {
 		Loc = Location; DTin = DateTimeIn; DTout = DateTimeOut;
+		setCost(Park.getBill(DateTimeIn, DateTimeOut));
 	}
 	public String getPID() {
 		return PID;
@@ -95,5 +100,11 @@ public class Park {
 	}
 	public void setCost(double cost) {
 		Cost = cost;
+	}
+	public float getRating() {
+		return rating;
+	}
+	public void setRating(float rating) {
+		this.rating = rating;
 	}
 }
