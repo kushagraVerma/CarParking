@@ -12,8 +12,8 @@
 </head>
 <body>
 	<form action="LoginCred" method="post">
-		Enter username: <input type="text" name="uname"><br>
-		Enter password: <input type="password" name="pass"><br>
+		Enter username: <input type="text" name="uname" required><br>
+		Enter password: <input type="password" name="pass" required><br>
 		<input type="submit" value="LOGIN">
 	</form><br>
 	<div><%

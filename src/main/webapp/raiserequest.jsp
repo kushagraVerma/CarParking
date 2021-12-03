@@ -47,6 +47,8 @@
 			document.homeForm.submit();
 		}
 	</script>
+	<form name="homeForm" action="home.jsp"></form>
+   <button onclick="document.homeForm.submit()">Home</button>
 	<form name="logoutForm" action="Logout" method="post"></form>
    <button onclick="myFunction()">Sign Out</button>
 </body>

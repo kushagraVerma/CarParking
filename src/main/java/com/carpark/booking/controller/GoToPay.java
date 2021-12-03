@@ -26,13 +26,15 @@ public class GoToPay extends HttpServlet {
 				(String)session.getAttribute("DateTimeIn"),
 				(String)session.getAttribute("DateTimeOut")
 			);
-		slot.setPID(Pid);
-		slot.setUid(u.getUid());
-//		System.out.println(slot.getDTin() + slot.getDTout() + Park.getBill(slot.getDTin(), slot.getDTout()));
-		slot.setCost(Park.getBill(slot.getDTin(), slot.getDTout()));
-		session.setAttribute("Slot", slot);
-		session.removeAttribute("ParkingList");
-		response.sendRedirect("paysum.jsp");
+		if(u!=null) {
+			slot.setPID(Pid);
+			slot.setUid(u.getUid());
+			slot.setCost(Park.getBill(slot.getDTin(), slot.getDTout()));
+			session.setAttribute("Slot", slot);
+			session.removeAttribute("ParkingList");
+			response.sendRedirect("paysum.jsp");
+			
+		}
 	}
 
 }
