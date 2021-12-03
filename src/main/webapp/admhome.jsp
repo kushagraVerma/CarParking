@@ -15,10 +15,9 @@
 		response.setHeader("Expires","0");
 	
 		Admin a = (Admin) session.getAttribute("admin");
-		if(a!=null){
+		if(a==null){
 			response.sendRedirect("admlogin.jsp");
-		}else{
-			
+			return;
 		}
 	%><br>
 	

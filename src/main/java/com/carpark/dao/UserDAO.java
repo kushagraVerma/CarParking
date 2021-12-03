@@ -87,6 +87,7 @@ public class UserDAO implements DAO{
 						rs.getString("loginw")
 					);
 				u.setUid(rs.getInt("uid"));
+				System.out.println(u.getUid() + " " + rs.getInt("uid"));
 				return u;
 			}
 		}catch(Exception e) {
@@ -125,6 +126,7 @@ public class UserDAO implements DAO{
 						rs.getString("loginw")
 					);
 				u.setUid(rs.getInt("uid"));
+				System.out.println(u.getUid() + " " + rs.getInt("uid"));
 				return u;
 			}
 		}catch(Exception e) {

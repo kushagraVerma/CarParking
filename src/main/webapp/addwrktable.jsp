@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
     <%@taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ page import="com.carpark.model.Park" %>
+<%@ page import="com.carpark.model.Admin"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +13,16 @@
 <%! String loc="";String first="";String last=""; int num=1;%>
 
 <%
+	response.setHeader("Cache-Control","no-cache, no-store, must-revalidate");
+	response.setHeader("Pragma","no-cache");
+	response.setHeader("Expires","0");
+	
+	Admin a = (Admin) session.getAttribute("admin");
+	if(a==null){
+		response.sendRedirect("admlogin.jsp");
+		return;
+	}
+	
 	loc = (String)session.getAttribute("Location");
 	first = (String)session.getAttribute("fname");
 	last = (String)session.getAttribute("lname");

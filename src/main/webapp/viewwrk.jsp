@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ page import="com.carpark.model.Worker" import = "java.util.ArrayList"%>
+<%@ page import="com.carpark.model.Admin"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,15 @@
 </head>
 <body>
 	<%
+	response.setHeader("Cache-Control","no-cache, no-store, must-revalidate");
+	response.setHeader("Pragma","no-cache");
+	response.setHeader("Expires","0");
+
+	Admin a = (Admin) session.getAttribute("admin");
+	if(a==null){
+		response.sendRedirect("admlogin.jsp");
+		return;
+	}
 	if(session.getAttribute("wlist")==null){
 		response.sendRedirect("LoadWorkers");
 	}

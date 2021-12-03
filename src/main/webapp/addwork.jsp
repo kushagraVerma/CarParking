@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="com.carpark.model.Worker" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ page import="com.carpark.model.Admin"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,8 +17,14 @@
 		response.setHeader("Pragma","no-cache");
 		response.setHeader("Expires","0");
 	
-		Worker a = (Worker) session.getAttribute("Worker");
-		if(a!=null){
+		Admin a = (Admin) session.getAttribute("admin");
+		if(a==null){
+			response.sendRedirect("admlogin.jsp");
+			return;
+		}
+	
+		Worker w = (Worker) session.getAttribute("Worker");
+		if(w==null){
 			response.sendRedirect("admlogin.jsp");
 			return;
 		}		

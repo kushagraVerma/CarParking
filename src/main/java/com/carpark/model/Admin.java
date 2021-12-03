@@ -1,6 +1,10 @@
 package com.carpark.model;
 
 public class Admin {
+	@Override
+	public String toString() {
+		return "Admin [uname=" + uname + ", pass=" + pass + "]";
+	}
 	private String uname,pass;
 	public Admin(String UN) {
 		uname = UN;
