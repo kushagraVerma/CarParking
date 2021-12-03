@@ -27,16 +27,14 @@ public class Pay extends HttpServlet {
 		if(u!=null && slot!=null) {
 			ParkDAO pdao = new ParkDAO();
 			int Wid = pdao.getWid(Integer.parseInt(slot.getPID()));
-//			System.out.println(Wid);
 			double amt = slot.getCost();
 			pdao.addBooking(slot);
 			LinkDAO ldao = new LinkDAO();
 			String link = ldao.genLink(Wid);
 			if(link!=null) {
-				String msg = "This message is sent by Car Parking Solutions."
-						+ "\nYou have paid Rs. " + amt + ". Thank you for using our services!"
-						+ "\nYou can rate your experience at the link below. We greatly value your feedback!"
-						+ "\n\n" + "http://localhost:8080/Car_Park/FeedBack?link="+link;
+				String msg = "You have paid Rs. " + amt + ". Thank you for using our services!"
+						+ "\nYou can rate your experience at the link below."
+						+ "\n" + "http://localhost:8080/Car_Park/FeedBack?link="+link;
 				String logw = u.getLogw();
 				if(logw.equals("CP")) {
 					SMSer smser = new SMSer(u.getPhno(),msg);

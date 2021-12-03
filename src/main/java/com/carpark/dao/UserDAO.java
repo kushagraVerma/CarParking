@@ -86,6 +86,7 @@ public class UserDAO implements DAO{
 						rs.getString("carno"),
 						rs.getString("loginw")
 					);
+				u.setUid(rs.getInt("uid"));
 				return u;
 			}
 		}catch(Exception e) {
