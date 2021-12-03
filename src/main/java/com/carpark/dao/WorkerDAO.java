@@ -124,8 +124,34 @@ public class WorkerDAO implements DAO{
 		}
 		return null;
 	}
-	public void addWorker(String Uname, String Pass, String Fname, String Joined) {
-		String sql = "insert into workers (uname,pass,fname,joined) values(?,?,?,?)";
+	static public int maxID() {
+		String sql = "select max(wid) as maxwid from Workers";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			ResultSet rs = st.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("maxwid");
+			}else {
+				return 1;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return -1;
+	}
+	public void addWorker(String Uname, String Pass, String Fname, String Joined,int Pid) {
+		String sql = "insert into workers (uname,pass,fname,joined,pid) values(?,?,?,?,?)";
 		Connection con = null;
 		PreparedStatement st = null;
 		try {
@@ -136,6 +162,7 @@ public class WorkerDAO implements DAO{
 			st.setString(2, Pass);
 			st.setString(3, Fname);
 			st.setString(4, Joined);
+			st.setInt(5, Pid);
 			st.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();

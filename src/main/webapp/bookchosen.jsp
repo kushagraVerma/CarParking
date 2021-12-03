@@ -20,8 +20,8 @@
 	Check-in Datetime: <%= slot.getDTin() %><br>
 	Check-out Datetime: <%= slot.getDTout() %><br>
 	Total cost: <%= slot.getCost() %><br>
-	<form action="Pay" method="post">
-		<input type="submit" value="PAY">
+	<form action="AddBooking" method="post">
+		<input type="submit" value="BOOK">
 	</form>
 </body>
 </html>

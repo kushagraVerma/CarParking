@@ -22,12 +22,8 @@
 			response.sendRedirect("admlogin.jsp");
 			return;
 		}
-	
-		Worker w = (Worker) session.getAttribute("Worker");
-		if(w==null){
-			response.sendRedirect("admlogin.jsp");
-			return;
-		}		
+
+		
 		if(session.getAttribute("locList2")==null){
 			response.sendRedirect("AdmLocLoad2");
 			return;
@@ -50,7 +46,7 @@
 			*
 	        </li>
 	        <li>Date Of Joining
- 	        <input type="date" name="birthday">
+ 	        <input type="date" name="DateTimeIn">
 	     </li>
 	     </ul>
 	     

@@ -41,18 +41,34 @@
 				<th>Check-in Datetime</th>
 				<th>Check-out Datetime</th>
 				<th>Cost</th>
+				<th>Checkout</th>
 			</tr>
 			<c:forEach items="${Bookings }" var="booking">
 				<tr>
 					<td>${booking.getLoc()}</td>
 					<td>${booking.getDTin()}</td>
 					<td>${booking.getDTout()}</td>
-					<td>${booking.getCost() }</td>
+					<td>${booking.getCost()}</td>
+					<td><button onclick="payFor(${booking.getPID()},'${booking.getDTout()}',${booking.getCost()})">PAY</button></td>
 				</tr>
 			</c:forEach>
 			</table>		
 		</c:otherwise>
 	</c:choose><br>
+	<form name="payForm" action="Pay" method="post">
+		<input type="hidden" name="pid">
+		<input type="hidden" name="dtout">
+		<input type="hidden" name="cost">
+	</form>
+	<script>
+		function payFor(Pid,DTout,Cost){
+			console.log(Pid);
+			document.payForm.pid.value = Pid;
+			document.payForm.dtout.value = DTout;
+			document.payForm.cost.value = Cost;
+			document.payForm.submit();
+		}
+	</script>
 	
 	
 	<c:choose>

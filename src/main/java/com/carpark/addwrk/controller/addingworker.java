@@ -27,15 +27,15 @@ public class addingworker extends HttpServlet {
     		String fname = request.getParameter("fname");
     		String lname = request.getParameter("lname");
     		
-    		String CiDT = request.getParameter("DateTimeIn");
+    		String CiDT = request.getParameter("DateTimeIn")+" 00:00";
     		String CoDT = CiDT;
     		HttpSession session = request.getSession();
     		ParkDAO pdao = new ParkDAO();
-    		ArrayList<Park> p = pdao.fromBooking(Loc, CiDT, CoDT);
+    		ArrayList<Park> p = pdao.fromBooking2(Loc, CiDT, CoDT);
     		if(p!=null) {
     			session.setAttribute("Info", p);
     			session.setAttribute("Location", Loc);
-    			session.setAttribute("lname",lname );
+    			session.setAttribute("lname", lname);
     			session.setAttribute("fname", fname);
     			session.setAttribute("Time", CiDT);
     			response.sendRedirect("addwrktable.jsp");

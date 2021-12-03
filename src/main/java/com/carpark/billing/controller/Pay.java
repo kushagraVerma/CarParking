@@ -23,28 +23,29 @@ public class Pay extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		User u = (User) session.getAttribute("user");
-		Park slot = (Park) session.getAttribute("Slot");
-		if(u!=null && slot!=null) {
+		String Pid = request.getParameter("pid");
+		String Cout = request.getParameter("dtout");
+		int Cost = Integer.parseInt(request.getParameter("cost"));
+		if(u!=null && Pid!=null) {
 			ParkDAO pdao = new ParkDAO();
-			int Wid = pdao.getWid(Integer.parseInt(slot.getPID()));
-			double amt = slot.getCost();
-			pdao.addBooking(slot);
-			LinkDAO ldao = new LinkDAO();
-			String link = ldao.genLink(Wid);
-			if(link!=null) {
-				String msg = "You have paid Rs. " + amt + ". Thank you for using our services!"
-						+ "\nYou can rate your experience at the link below."
-						+ "\n" + "http://localhost:8080/Car_Park/FeedBack?link="+link;
-				String logw = u.getLogw();
-				if(logw.equals("CP")) {
-					SMSer smser = new SMSer(u.getPhno(),msg);
-					smser.send();
-				}else {
-					Mailer mailer = new Mailer(u.getEmail(),"Payment Confirmation",msg);
-					mailer.send();
-				}
-				response.sendRedirect("home.jsp");
+			int Wid = pdao.getWid(Integer.parseInt(Pid));
+			pdao.removeBooking(Pid,Cout);
+			String msg = "You have paid Rs. " + Cost + ". Thank you for using our services!";
+			if(Wid>0) {
+				LinkDAO ldao = new LinkDAO();
+				String link = ldao.genLink(Wid);
+				msg = msg + "\nYou can rate your experience at the link below."
+						+ "\n" + "http://localhost:8080/Car_Park/FeedBack?link="+link; 
 			}
+			String logw = u.getLogw();
+			if(logw.equals("CP")) {
+				SMSer smser = new SMSer(u.getPhno(),msg);
+				smser.send();
+			}else {
+				Mailer mailer = new Mailer(u.getEmail(),"Payment Confirmation",msg);
+				mailer.send();
+			}
+			response.sendRedirect("home.jsp");
 		}else {
 			response.sendRedirect("login.jsp");
 		}

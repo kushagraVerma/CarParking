@@ -116,7 +116,7 @@
 			session.removeAttribute("showWaiting");
 		}
 	%>
-	<form name="payForm" action="GoToPay" method="post">
+	<form name="payForm" action="GoToBook" method="post">
 		<input type="hidden" name="Pid">
 	</form>
 	<form name="waitForm" action="AddWaiting" method="post">

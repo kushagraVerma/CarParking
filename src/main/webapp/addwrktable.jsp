@@ -3,6 +3,7 @@
     <%@taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ page import="com.carpark.model.Park" %>
 <%@ page import="com.carpark.model.Admin"%>
+<%@ page import="com.carpark.dao.ParkDAO" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,31 +30,34 @@
 %>
 <h1>Location: <% out.println(loc); %> </h1>
 <h1> Worker: <%out.println(first + " " + last); %></h1>
-
 <table border="1px solid black" >
   <tr>
-    <th><h1>&emsp; Number &emsp;</h1></th>
+    <th><h1>&emsp; Parking Number &emsp;</h1></th>
     <th><h1>&emsp; Add &emsp;</h1></th>
   </tr>
 	
 	<c:forEach items="${Info}" var="slot">
 	<tr>
-	<td><h1> &emsp; &emsp; ${num=num+1} </h1> </td>
-	
+	<td><h1> &emsp; &emsp; ${slot.getPID()} </h1> </td>
 	<c:choose>
-		  <c:when test="${slot.getEmt().equals(\"0\")}" >
-			<td>&emsp;&emsp;<input type="button" value="Add here"></td>
+		  <c:when test="${ParkDAO.checkWid(slot.getPID())}" >
+			<td>&emsp;&emsp;<button disabled>Add here</button></td>
 		  </c:when>
 		  <c:otherwise>
-			<td>&emsp;&emsp;<input type="button" value="Add here"></td>
+			<td>&emsp;&emsp;<button onclick="assW(${slot.getPID()})">Add here</button></td>
 		  </c:otherwise>
 		</c:choose>
-	
-	
 	</tr>
 	</c:forEach>
 	</table>
-
-
+<form name="assForm" method="get" action = "addtosql">
+<input type="hidden" name="pid">
+</form>
+	<script>
+		function assW(Pid){
+			document.assForm.pid.value = Pid;
+			document.assForm.submit();
+		}
+	</script>
 </body>
 </html>
