@@ -45,6 +45,7 @@ public class RegNonCred extends HttpServlet {
 			if (valid) {
 				UserDAO udao = new UserDAO();
 				udao.addUser(u);
+				u = udao.fromNonCred(u.getEmail());
 				session.setAttribute("user", u);
 				session.removeAttribute("new-user-re");
 				response.sendRedirect("home.jsp");

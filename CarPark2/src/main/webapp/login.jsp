@@ -6,14 +6,14 @@
 <meta charset="ISO-8859-1">
 <title>Login | Car Parking Solutions</title>
    <script src="JS/loginScr.js"></script>
-   <script src="https://apis.google.com/js/platform.js" async defer></script>
+   <script src="https://apis.google.com/js/platform.js"></script>
    <meta name="google-signin-client_id" content="304993750427-lhfj72u0qff5qfjg7hhiqh4v2n32ud83.apps.googleusercontent.com">
-   <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+   <script crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 </head>
 <body>
 	<form action="LoginCred" method="post">
-		Enter username: <input type="text" name="uname"><br>
-		Enter password: <input type="password" name="pass"><br>
+		Enter username: <input type="text" name="uname" required><br>
+		Enter password: <input type="password" name="pass" required><br>
 		<input type="submit" value="LOGIN">
 	</form><br>
 	<div><%

@@ -1,17 +1,27 @@
 package com.carpark.model;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.regex.*;
 
 public class Park {
-	private String PID, Loc, DTin, DTout;
+	private String PID, Loc, DTin, DTout, servStr;
 	private double Cost;
-	private int Emt, WaitingTime;
-	public double getCost() {
-		return Cost;
+	private float rating;
+	private int uid, Emt, WaitingTime;
+	public String getServStr() {
+		return servStr;
 	}
-	public void setCost(double cost) {
-		Cost = cost;
+	public void setServStr(String servStr) {
+		this.servStr = servStr;
+	}
+	public int getUid() {
+		return uid;
+	}
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
+	public Park(String Location, String DateTimeIn, String DateTimeOut) {
+		Loc = Location; DTin = DateTimeIn; DTout = DateTimeOut;
+		setCost(Park.getBill(DateTimeIn, DateTimeOut));
 	}
 	public String getPID() {
 		return PID;
@@ -24,9 +34,6 @@ public class Park {
 	}
 	public void setEmt(int emt) {
 		Emt = emt;
-	}
-	public Park(String Location, String DateTimeIn, String DateTimeOut) {
-		Location = Loc; DateTimeIn = DTin; DateTimeOut = DTout;
 	}
 	public String getLoc() {
 		return Loc;
@@ -54,9 +61,7 @@ public class Park {
 	}
 	@Override
 	public String toString() {
-		return "Park [PID =" + PID + ", Location =" + Loc + ", Check-In Date and Time =" + DTin + ","
-				+ " Check-Out Date and Time =" + DTout + ", Cost =" + Cost
-				+ ", Waiting Time =" + WaitingTime + "]";
+		return "Park [PID=" + PID + ", Location=" + Loc + ", Check-In Date and Time=" + DTin + ", Check-Out Date and Time=" + DTout+" ]";
 	}
 	public static double getBill(String CiDT, String CoDT) {
 		Pattern p = Pattern.compile("(\\d+)-(\\d+)-(\\d+)[\\sT](\\d+):(\\d+)");
@@ -64,10 +69,10 @@ public class Park {
 		Matcher m2 = p.matcher(CoDT);
 		m1.find();
 		m2.find();
-		int cidt = Integer.parseInt(m2.group(4)) * 60 + Integer.parseInt(m2.group(5));
-		int codt = Integer.parseInt(m1.group(4)) * 60 + Integer.parseInt(m1.group(5));
+		int cidt = Integer.parseInt(m1.group(4)) * 60 + Integer.parseInt(m1.group(5));
+		int codt = Integer.parseInt(m2.group(4)) * 60 + Integer.parseInt(m2.group(5));
 		double hours = codt - cidt;
-		System.out.println(Math.ceil(hours/60));
+//		System.out.println(Math.ceil(hours/60));
 		return Math.ceil(hours/60) * 25;
 	}
 	public int getWaitingTime(String CiDT) {
@@ -84,10 +89,22 @@ public class Park {
 		}
 		if(WaitingTime < 0)
 			WaitingTime = 0;
-		System.out.println(WaitingTime);
+//		System.out.println(WaitingTime);
 		return WaitingTime;
 	}
 	public int getWaitingTime() {
 		return WaitingTime;
+	}
+	public double getCost() {
+		return Cost;
+	}
+	public void setCost(double cost) {
+		Cost = cost;
+	}
+	public float getRating() {
+		return rating;
+	}
+	public void setRating(float rating) {
+		this.rating = rating;
 	}
 }

@@ -50,7 +50,7 @@ public class SMSer {
 				response.append(line);
 			}
 
-			// System.out.println(response);
+			 System.out.println("SENT SMS");
 
 		} catch (Exception e) {
 			e.printStackTrace();

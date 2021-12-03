@@ -19,6 +19,7 @@ public class AdmLogin extends HttpServlet {
 		HttpSession session = request.getSession();
 		AdminDAO adao = new AdminDAO();
 		Admin a = adao.fromCreds(uname,pass);
+		System.out.println(a);
 		if(a!=null) {
 			session.setAttribute("admin",a);
 			response.sendRedirect("admhome.jsp");
