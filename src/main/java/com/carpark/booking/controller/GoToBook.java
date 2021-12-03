@@ -15,8 +15,8 @@ import com.carpark.model.User;
 /**
  * Servlet implementation class GoToPay
  */
-@WebServlet("/GoToPay")
-public class GoToPay extends HttpServlet {
+@WebServlet("/GoToBook")
+public class GoToBook extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String Pid = request.getParameter("Pid");
 		HttpSession session = request.getSession();
@@ -33,7 +33,7 @@ public class GoToPay extends HttpServlet {
 			slot.setCost(Park.getBill(slot.getDTin(), slot.getDTout()));
 			session.setAttribute("Slot", slot);
 			session.removeAttribute("ParkingList");
-			response.sendRedirect("paysum.jsp");
+			response.sendRedirect("bookchosen.jsp");
 			
 		}
 	}

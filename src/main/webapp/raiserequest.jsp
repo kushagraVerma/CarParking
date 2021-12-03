@@ -40,7 +40,6 @@
 			Your car model: <input type="text">
 	</form>
 	<button onclick="gotRequest()">SUBMIT REQUEST</button>
-	<form name="homeForm" action="home.jsp"></form>
 	<script>
 		function gotRequest(){
 			alert("Your request has been submitted!");

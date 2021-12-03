@@ -153,6 +153,42 @@ public class ParkDAO implements DAO {
 		}
 		return null;
 	}
+	public Park bookingFromPid(String Pid, String Date) {
+		String sql = "select cin, cout from booking where pid=? and cin>? and cout<?";
+		Connection con = null;
+		PreparedStatement st = null;
+		String Date1 = Date+"00:00";
+		String Date2 = Date+"23:59";
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url, username, password);
+			st = con.prepareStatement(sql);
+			st.setString(1, Pid);
+			st.setString(2, Date1);
+			st.setString(3, Date2);
+			ResultSet rs = st.executeQuery();
+			Park Slot = new Park("", "", "");
+			if (rs.next()) {
+				if (rs.getString("cin") != null) {
+					Slot.setDTin(rs.getString("cin"));
+				}
+				if (rs.getString("cout") != null) {
+					Slot.setDTout(rs.getString("cout"));
+				}
+			}
+			return Slot;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				st.close();
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 
 	public ArrayList<String> getLocs() {
 		String sql = "select distinct(loc) as location from parkspace;";
@@ -195,6 +231,7 @@ public class ParkDAO implements DAO {
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				Park p = new Park(rs.getString("loc"), rs.getString("cin"), rs.getString("cout"));
+				p.setPID(rs.getString("parkid"));
 				bookings.add(p);
 			}
 			return bookings;
@@ -351,5 +388,9 @@ public class ParkDAO implements DAO {
 				e.printStackTrace();
 			}
 		}
+	}
+	static public boolean checkWid(int Pid) {
+		ParkDAO pdao = new ParkDAO();
+		return pdao.getWid(Pid) > 0;
 	}
 }
