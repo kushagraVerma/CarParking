@@ -25,7 +25,7 @@ public class WorkerDAO implements DAO{
 				Worker w = new Worker(uname);
 				w.setAll(
 						rs.getInt("wid"),
-						rs.getInt("wid"),
+						rs.getInt("pid"),
 						uname,
 						pass,
 						rs.getString("fname"),
@@ -34,7 +34,43 @@ public class WorkerDAO implements DAO{
 						rs.getFloat("rating"),
 						rs.getInt("rateCnt")
 					);
-				w.setPass(pass);
+				return w;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	public Worker fromWid(int Wid) {
+		String sql = "select * from Workers where wid=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			st.setInt(1, Wid);
+			ResultSet rs = st.executeQuery();
+			if(rs.next()) {
+				Worker w = new Worker(rs.getString("uname"));
+				w.setAll(
+						rs.getInt("wid"),
+						rs.getInt("pid"),
+						"",
+						rs.getString("pass"),
+						rs.getString("fname"),
+						rs.getString("joined"),
+						rs.getString("services"),
+						rs.getFloat("rating"),
+						rs.getInt("rateCnt")
+					);
 				return w;
 			}
 		}catch(Exception e) {

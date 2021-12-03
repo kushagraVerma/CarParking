@@ -57,7 +57,16 @@
 					<td>${pspace.getPID()}</td>
 					<td>${pspace.getCost()}</td>
 					<td>${pspace.getWaitingTime()}</td>
-					<td>${pspace.getRating() }</td>
+					<td>
+						<c:choose>
+							<c:when test="${pspace.getRating()>=0 }">
+								${pspace.getRating() }
+							</c:when>
+							<c:otherwise>
+								-
+							</c:otherwise>
+						</c:choose>
+					</td>
 					<td>
 						<c:forEach var="i" begin="1" end="3">
 							<c:choose>
@@ -75,7 +84,16 @@
 					<td>${pspace.getPID()}</td>
 					<td>${pspace.getCost()}</td>
 					<td>0</td>
-					<td>${pspace.getRating() }</td>
+					<td>
+						<c:choose>
+							<c:when test="${pspace.getRating()>=0 }">
+								${pspace.getRating() }
+							</c:when>
+							<c:otherwise>
+								-
+							</c:otherwise>
+						</c:choose>
+					</td>
 					<td>
 						<c:forEach var="i" begin="0" end="3">
 							<c:choose>

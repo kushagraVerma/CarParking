@@ -21,6 +21,7 @@ public class GoToPay extends HttpServlet {
 		String Pid = request.getParameter("Pid");
 		HttpSession session = request.getSession();
 		User u = (User) session.getAttribute("user");
+//		System.out.println(u);
 		Park slot = new Park(
 				(String)session.getAttribute("Location"),
 				(String)session.getAttribute("DateTimeIn"),

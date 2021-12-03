@@ -47,7 +47,7 @@ public class BookingDetails extends HttpServlet {
         		String CiDT = Dt + " " + TIn;
         		String CoDT = Dt + " " + TOut;
         		ParkDAO pdao = new ParkDAO();
-        		ArrayList<Park> p = pdao.fromBooking(Loc, CiDT, CoDT);
+        		ArrayList<Park> p = pdao.fromBooking2(Loc, CiDT, CoDT);
         		if(p!=null) {
         			session.setAttribute("ParkingList", p);
         			boolean showWaiting = true;
