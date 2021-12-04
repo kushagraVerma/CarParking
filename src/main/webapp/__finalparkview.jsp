@@ -24,7 +24,6 @@
 		
 		loc = (String)session.getAttribute("Location");
 		String t = (String)session.getAttribute("Time");
-		
 		int i=0;
 		
 		while(t.charAt(i)!='T')
@@ -32,19 +31,21 @@
 			i++;
 		}
 		date=t.substring(0,i);
+		session.setAttribute("Date", date);
 		i++;
+		
 		
 		time=t.substring(i,t.length());
 		
 	%>
-	
+
 	<h1>Location: <% out.println(loc); %> </h1>
 	<h1>Date: <% out.println(date); %> </h1>
 	<h1>Time: <% out.println(time); %> </h1>
 	
 	<table border="1px solid black" >
   <tr>
-    <th><h1>&emsp; Number &emsp;</h1></th>
+    <th><h1>&emsp; Parking ID &emsp;</h1></th>
     <th><h1>&emsp; Status &emsp;</h1></th>
     <th><h1>&emsp; Color &emsp;</h1></th>
     <th><h1>&emsp; Booking &emsp;</h1></th>
@@ -53,46 +54,72 @@
 	
 	<c:forEach items="${Info}" var="slot">
 	<tr>
-	<td><h1> &emsp; &emsp; ${num=num+1} </h1> </td>
+	<td><h1> &emsp; &emsp;&emsp; ${slot.getPID()} </h1> </td>
 
 	<c:choose>
-		  <c:when test="${slot.getEmt().equals(\"1\")}" >
-			<td bgcolor= "Green"><h1>&emsp; Empty</h1></td>
+		  <c:when test="${slot.getEmt()==1}" >
+			<td><h1>&emsp; Empty</h1></td>
 		  </c:when>
 		  <c:otherwise>
-			<td bgcolor= "Red"><h1>&emsp; Filled</h1></td>
+			<td><h1>&emsp; Filled</h1></td>
 		  </c:otherwise>
 	</c:choose>
 	
 	<c:choose>
-		  <c:when test="${slot.getEmt().equals(\"1\")}" >
-			<td>&emsp;&emsp;&emsp;&emsp;<button disabled>DELETE</button></td>
+		  <c:when test="${slot.getEmt()==1}" >
+			<td bgcolor= "Green"></td>
 		  </c:when>
 		  <c:otherwise>
-			<td>&emsp;&emsp;&emsp;&emsp;<button>DELETE</button></td>
+			<td bgcolor= "Red"></td>
+		  </c:otherwise>
+	</c:choose>
+	
+	<c:choose>
+		  <c:when test="${slot.getDTin()==null}" >
+			<td>&emsp;&emsp;&emsp;&emsp;<button disabled>VIEW</button></td>
+		  </c:when>
+		  <c:otherwise>
+			<td>&emsp;&emsp;&emsp;&emsp;<button onClick="viewT(${slot.getPID()},'${Date}')">VIEW</button></td>
 		  </c:otherwise>
 		</c:choose>
 	
-	<c:choose>
-		  <c:when test="${slot.getEmt().equals(\"1\")}" >
-			<td>&emsp;&emsp;&emsp;&emsp;<button>DELETE</button></td>
-		  </c:when>
-		  <c:otherwise>
-			<td>&emsp;&emsp;&emsp;&emsp;<button disabled>DELETE</button></td>
-		  </c:otherwise>
-		</c:choose>
+	
+	
+		<td>&emsp;&emsp;&emsp;&emsp;<button onClick="removeP(${slot.getPID()})">DELETE</button></td>
 	
 	
 	</tr>
 	</c:forEach>
 	</table>
+	
+	<form name="removeSlot" action="RemoveParkspace" method="post">
+		<input name="pid" type="hidden">
+	</form>
 	<script>
-	function delBook(cout){
-		
-	}
+		function removeP(Pid){
+			if(confirm("Are you sure you want to remove this parking?")){
+				document.removeSlot.pid.value = Pid;
+				document.removeSlot.submit();
+			}
+		}
+
 	</script>
 	
-	
+	<form name="viewTime" action="Timeview" method="post">
+	<input name="pid" type="hidden">
+	<input name="date" type="hidden">
+	</form>
+	<script>
+		function viewT(Pid,date){
+			if(confirm("viewing")){
+			document.viewTime.pid.value = Pid;
+			document.viewTime.date.value = date;
+			document.viewTime.submit();
+			}
+			}
+		
+
+	</script>
 
 
 </body>
