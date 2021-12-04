@@ -24,7 +24,7 @@
 	
 	<h1>Manage parking space</h1>		 
 	<ul>	
-	<li><a href="addpark.jsp">Add new parking space</a></li>
+	<li><a href="addparking.jsp">Add new parking space</a></li>
 	<li><a href="viewpark.jsp">View parking spaces</a></li>
 	</ul>
 	

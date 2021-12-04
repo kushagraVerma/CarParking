@@ -52,6 +52,12 @@
 	     
 	 	 <input type ="submit">
 		</form>
+		
+	<form name="homeForm" action="admhome.jsp"></form>
+   <button onclick="document.homeForm.submit()">Home</button>
+<form action="AdmLogout" method="post">
+		<input type="submit" value="SIGN OUT">
+	</form>
 
 </body>
 </html>

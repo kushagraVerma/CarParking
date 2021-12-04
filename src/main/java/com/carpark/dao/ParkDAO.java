@@ -153,12 +153,12 @@ public class ParkDAO implements DAO {
 		}
 		return null;
 	}
-	public Park bookingFromPid(String Pid, String Date) {
+	public ArrayList<Park> bookingFromPid(String Pid, String Date) {
 		String sql = "select cin, cout from booking where pid=? and cin>? and cout<?";
 		Connection con = null;
 		PreparedStatement st = null;
-		String Date1 = Date+"00:00";
-		String Date2 = Date+"23:59";
+		String Date1 = Date+" 00:00";
+		String Date2 = Date+" 23:59";
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(url, username, password);
@@ -167,16 +167,13 @@ public class ParkDAO implements DAO {
 			st.setString(2, Date1);
 			st.setString(3, Date2);
 			ResultSet rs = st.executeQuery();
-			Park Slot = new Park("", "", "");
-			if (rs.next()) {
-				if (rs.getString("cin") != null) {
-					Slot.setDTin(rs.getString("cin"));
-				}
-				if (rs.getString("cout") != null) {
-					Slot.setDTout(rs.getString("cout"));
-				}
+			ArrayList<Park> Slots = new ArrayList<Park>();
+
+			while (rs.next()) {
+				Park Slot=new Park("",rs.getString("cin"),rs.getString("cout"));
+				Slots.add(Slot);
 			}
-			return Slot;
+			return Slots;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -189,7 +186,35 @@ public class ParkDAO implements DAO {
 		}
 		return null;
 	}
+	public ArrayList<Park> bookingFromPid(String Pid) {
+		String sql = "select cin, cout from booking where pid=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url, username, password);
+			st = con.prepareStatement(sql);
+			st.setString(1, Pid);
+			ResultSet rs = st.executeQuery();
+			ArrayList<Park> Slots = new ArrayList<Park>();
 
+			while (rs.next()) {
+				Park Slot=new Park("",rs.getString("cin"),rs.getString("cout"));
+				Slots.add(Slot);
+			}
+			return Slots;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				st.close();
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 	public ArrayList<String> getLocs() {
 		String sql = "select distinct(loc) as location from parkspace;";
 		Connection con = null;
@@ -235,6 +260,37 @@ public class ParkDAO implements DAO {
 				bookings.add(p);
 			}
 			return bookings;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				st.close();
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	public ArrayList<Park> atLoc(String Loc) {
+		String sql = "select pid,loc from parkspace where loc=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			ArrayList<Park> spaces = new ArrayList<Park>();
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url, username, password);
+			st = con.prepareStatement(sql);
+			st.setString(1, Loc);
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+				String Pid = rs.getInt("pid")+"";
+				Park p = new Park(Pid);
+				int empty = bookingFromPid(Pid).size()>0 ? 0 : 1;
+				p.setEmt(empty);
+				spaces.add(p);
+			}
+			return spaces;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -320,6 +376,7 @@ public class ParkDAO implements DAO {
 			}
 		}
 	}
+	
 
 	public void assignWorker(String Pid, int Wid) {
 		String sql = "update parkspace set wid=? where pid=?";
@@ -346,6 +403,28 @@ public class ParkDAO implements DAO {
 
 	public void removeParkspace(String Pid) {
 		String sql = "delete from parkspace where pid=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url, username, password);
+			st = con.prepareStatement(sql);
+			st.setInt(1, Integer.parseInt(Pid));
+			st.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				st.close();
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void removeBooking(String Pid) {
+		String sql = "delete from booking where pid=?";
 		Connection con = null;
 		PreparedStatement st = null;
 		try {

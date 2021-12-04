@@ -23,6 +23,9 @@ public class Park {
 		Loc = Location; DTin = DateTimeIn; DTout = DateTimeOut;
 		setCost(Park.getBill(DateTimeIn, DateTimeOut));
 	}
+	public Park(String Pid) {
+		PID = Pid;
+	}
 	public String getPID() {
 		return PID;
 	}
