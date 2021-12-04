@@ -37,7 +37,7 @@ public class BookingDetails extends HttpServlet {
     		String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     		if(today.compareTo(Dt)>=0) {
     			valid = false;
-    			session.setAttribute("invalid-dt", "Past date selected");
+    			session.setAttribute("invalid-dt", "Only future dates can be selected");
     		}
     		if(TIn.compareTo(TOut)>=0) {
     			valid = false;

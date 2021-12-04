@@ -1,5 +1,7 @@
 package com.carpark.model;
 
+import java.util.Random;
+
 public class User {
 	private String fn,ln,un,pw,addr,email,phno,carno,logw;
 	int uid;
@@ -83,5 +85,14 @@ public class User {
 	public String toString() {
 		return "User [fn=" + fn + ", ln=" + ln + ", un=" + un + ", pw=" + pw + ", addr=" + addr + ", email=" + email
 				+ ", phno=" + phno + ", carno=" + carno + ", logw=" + logw + "]";
+	}
+	public static String genPromo() {
+		String pro = "";
+		for(int i = 0; i < 4; i++) {
+			Random r = new Random();
+			char c = (char) (r.nextInt(26)+'A');
+			pro = pro + c;
+		}
+		return pro;
 	}
 }

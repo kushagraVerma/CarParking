@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.carpark.billing.dao.LinkDAO;
 import com.carpark.dao.ParkDAO;
+import com.carpark.dao.UserDAO;
 import com.carpark.helper.Mailer;
 import com.carpark.helper.SMSer;
 import com.carpark.model.Park;
@@ -26,10 +27,18 @@ public class Pay extends HttpServlet {
 		String Pid = request.getParameter("pid");
 		String Cout = request.getParameter("dtout");
 		int Cost = Integer.parseInt(request.getParameter("cost"));
+		String uPromo =  request.getParameter("upromo").toUpperCase();
 		if(u!=null && Pid!=null) {
 			ParkDAO pdao = new ParkDAO();
+			UserDAO udao = new UserDAO();
 			int Wid = pdao.getWid(Integer.parseInt(Pid));
 			pdao.removeBooking(Pid,Cout);
+			udao.changePromoCnt(u.getUid(),1);
+			if(uPromo.length()>0 && uPromo.equals(udao.getPromo(u.getUid()))) {
+				udao.removePromo(u.getUid());
+				udao.changePromoCnt(u.getUid(), -7);
+				Cost = (Cost/5)*4;
+			}
 			String msg = "You have paid Rs. " + Cost + ". Thank you for using our services!";
 			if(Wid>0) {
 				LinkDAO ldao = new LinkDAO();
