@@ -32,7 +32,7 @@
 	Your bookings:<br>
 	<c:choose>
 		<c:when test="${Bookings.size()==0 }">
-			No bookings yet!
+			No bookings yet!<br>
 		</c:when>
 		<c:otherwise>
 			<table border="1px solid black">
@@ -52,14 +52,15 @@
 					<td><button onclick="payFor(${booking.getPID()},'${booking.getDTout()}',${booking.getCost()})">PAY</button></td>
 				</tr>
 			</c:forEach>
-			</table>		
+			</table>	
+			<form name="payForm" action="Pay" method="post">
+				<input type="hidden" name="pid">
+				<input type="hidden" name="dtout">
+				<input type="hidden" name="cost">
+				Use a promo code for a 20% discount: <input type="text" name="upromo" maxlength="4">
+			</form>	
 		</c:otherwise>
 	</c:choose><br>
-	<form name="payForm" action="Pay" method="post">
-		<input type="hidden" name="pid">
-		<input type="hidden" name="dtout">
-		<input type="hidden" name="cost">
-	</form>
 	<script>
 		function payFor(Pid,DTout,Cost){
 			console.log(Pid);

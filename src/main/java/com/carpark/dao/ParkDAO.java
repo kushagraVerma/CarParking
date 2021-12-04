@@ -68,7 +68,7 @@ public class ParkDAO implements DAO {
 	}
 
 	public Park bookingFromPid(String Pid, String Loc, String CiDT, String CoDT) {
-		String sql = "select cin,max(cout) as cout,avg(cin>? or cout<?)=1 as available,uid "
+		String sql = "select cin,max(cout) as cout,avg(cin>=? or cout<=?)=1 as available,uid "
 				+ "from booking where pid=? group by pid";
 		// String sql = "select booking.pid,cin,cout,(cin>? or cout<?) as Available from
 		// booking where pid in (select pid from parkspace where loc=?);";
@@ -259,7 +259,6 @@ public class ParkDAO implements DAO {
 			st.setInt(1, Pid);
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
-//				System.out.println(rs.getInt("wid") + " " + Pid);
 				return rs.getInt("wid");
 			}
 		} catch (Exception e) {

@@ -222,6 +222,7 @@ public class WorkerDAO implements DAO{
 		String sql = "update Workers set rating=?,rateCnt=? where wid=?";
 
 		currRating = (currRating*currCnt+rating)/(currCnt+1);
+		currRating = Math.round(currRating*100)/100;
 		currCnt++;
 		
 		Connection con = null;

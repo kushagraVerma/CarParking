@@ -141,4 +141,119 @@ public class UserDAO implements DAO{
 		}
 		return null;
 	}
+	public int getPromoCnt(int Uid) {
+		String sql = "select promoCnt from UserReg where uid=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			st.setInt(1,Uid);
+			ResultSet rs = st.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("promoCnt");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return -1;
+	}
+	public String getPromo(int Uid) {
+		String sql = "select promo from UserReg where uid=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			st.setInt(1,Uid);
+			ResultSet rs = st.executeQuery();
+			if(rs.next() && rs.getString("promo")!=null) {
+				return rs.getString("promo");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return "";
+	}
+	public void changePromoCnt(int Uid, int delta) {
+		String sql = "update UserReg set promocnt = promocnt + ? where uid=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			st.setInt(1,delta);
+			st.setInt(2, Uid);
+			st.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void setPromo(int Uid, String Promo) {
+		String sql = "update UserReg set promo = ? where uid=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			st.setString(1,Promo);
+			st.setInt(2, Uid);
+			st.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void removePromo(int Uid) {
+		String sql = "update UserReg set promo=NULL where uid=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			st.setInt(1, Uid);
+			st.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}		
+	}
 }
