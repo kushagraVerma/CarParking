@@ -332,7 +332,7 @@ public class ParkDAO implements DAO {
 	}
 
 	public void addBooking(Park slot) {
-		String sql = "insert into booking values(?,?,?,?)";
+		String sql = "insert into booking values(?,?,?,?,?)";
 		Connection con = null;
 		PreparedStatement st = null;
 		try {
@@ -343,6 +343,7 @@ public class ParkDAO implements DAO {
 			st.setString(2, slot.getDTin());
 			st.setString(3, slot.getDTout());
 			st.setInt(4, slot.getUid());
+			st.setInt(5, 0);
 			st.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
