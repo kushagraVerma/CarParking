@@ -44,7 +44,7 @@
             <img class="mb-1 img-fluid" src="images/kasa-Logo.png" alt="" width="150px" height="150px">
             <h3 class="mb-3 font-weight-bolder">Car Parking Solutions</h3>
             <hr color="black">
-            <h4 class="mb-3">Raise Request</h4>
+            <h4 class="mb-3">Raise Request For Parking Space</h4>
             <select class="form-select form-select-lg mb-3 btn btn-lg btn-block" aria-label=".form-select-lg example" name="Location" required >
 			<c:forEach items="${locList}" var="location">
 				<option value="${location}" > ${location} </option>
@@ -53,7 +53,7 @@
             <label class="form-label" for="typeuname">Location</label>
 			 <div class="form-outline mb-3">
               <input type="text" id="typeuname" class="form-control form-control-lg" name="uname" />
-              <label class="form-label" for="typeuname">Your car model</label>
+              <label class="form-label" for="typeuname">Enter car model for requested space</label>
             </div>
             <button class="btn btn-primary btn-lg btn-block" onclick="gotRequest()">Submit Request</button><br>
             <hr class="my-4">
