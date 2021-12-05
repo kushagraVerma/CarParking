@@ -6,6 +6,10 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <title>View Parking Spaces</title>
 </head>
 <body>
@@ -27,8 +31,20 @@
 		return;
 	}
 	%>
-	<form action="ViewParkspaces" method="get">
-		<select name="Location" required>
+	
+  <section class="vh-100" style="background-color: #508bfc;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+          <form class="form-sigin" action="ViewParkspaces" method="get">
+            <img class="mb-1 img-fluid" src="images/kasa-Logo.png" alt="" width="150px" height="150px">
+            <h3 class="mb-3 font-weight-bolder">Car Parking Solutions</h3>
+            <hr color="black">
+            <h4 class="mb-3">View Parking Spaces</h4>
+            
+            <select class="form-select form-select-lg mb-3 btn btn-lg btn-block" id="Location" aria-label=".form-select-lg example" name="Location" required >
 			<c:forEach items="${locList}" var="location">
 				<c:choose>
 					<c:when test="${location.equals(loc) }">
@@ -40,35 +56,41 @@
 				</c:choose>
 				${location}</option>
 			</c:forEach>
-		</select>* <input type="submit">
-	</form>
+            <label class="form-label" for="Location">Location</label>
+            <input class="btn btn-primary btn-lg btn-block" type="submit" value="View">
+            </form>
+	        <hr class="my-4">
 	<c:choose>
 		<c:when test="${Spaces!=null && Spaces.size()>0}">
-			<table border="1px solid black">
-				<tr>
-					<th>Parking ID</th>
-					<th>Bookings</th>
-					<th>Parkspace</th>
-				</tr>
+		
+		<table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+        <th scope="col">Parking ID</th>
+        <th scope="col">Bookings</th>
+        <th scope="col">Parkspace</th>
+        </tr>
+        </thead>
 
 				<c:forEach items="${Spaces}" var="space">
 					<tr>
-						<td>${space.getPID()}</td>
+						<td class="align-middle">${space.getPID()}</td>
 						<c:choose>
 							<c:when test="${space.getEmt()==1}">
-								<td>No Bookings</td>
+								<td class="align-middle">No Bookings</td>
 							</c:when>
 							<c:otherwise>
-								<td><button onClick="viewT(${space.getPID()})">VIEW</button></td>
+								<td class="align-middle"><button class="btn btn-success btn-lg" onClick="viewT(${space.getPID()})" >View</button></td>
 							</c:otherwise>
 						</c:choose>
-						<td><button onClick="removeP(${space.getPID()})">DELETE</button></td>
+						<td class="align-middle"><button class="btn btn-danger btn-lg" onClick="removeP(${space.getPID()})">Delete</button></td>
 					</tr>
 				</c:forEach>
 			</table>
 		</c:when>
 		<c:otherwise>
-			No parking spaces loaded
+		<h5 class="mb-3">No parking spaces loaded</h5>
+			
 		</c:otherwise>
 	</c:choose>
 	
@@ -91,12 +113,14 @@
 		}
 
 	</script>
-	<form name="homeForm" action="admhome.jsp"></form>
-   <button onclick="document.homeForm.submit()">Home</button>
-	<form action="AdmLogout" method="post">
-		<input type="submit" value="SIGN OUT">
-	</form>
+	 
+	<hr class="my-4">
 	
+    <form name="homeForm" action="admhome.jsp"></form>
+    <button class="btn btn-primary btn-lg btn-block" onclick="document.homeForm.submit()" type="submit" value="Home">Home</button><br>
+	<form name="AdmLogout" action="Logout" method="post">
+	<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign Out"></form>
+
 	<%
 	session.removeAttribute("Pid");
 	session.removeAttribute("location");
@@ -104,5 +128,13 @@
 	session.removeAttribute("Spaces");
 	session.removeAttribute("locList");
 	%>
+	
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>	
+	
 </body>
 </html>

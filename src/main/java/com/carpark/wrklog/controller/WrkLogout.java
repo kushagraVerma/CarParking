@@ -14,7 +14,7 @@ public class WrkLogout extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.removeAttribute("worker");
 		session.invalidate();
-		response.sendRedirect("wrklogin.jsp");
+		response.sendRedirect("Landing.html");
 	}
 
 }

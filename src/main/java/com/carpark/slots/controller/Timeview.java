@@ -3,6 +3,7 @@ package com.carpark.slots.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,6 +32,7 @@ public class Timeview extends HttpServlet {
 			String date = DateTime.dateFromDT(p.getDTin());
 			dates.add(date);
 		}
+		dates = new ArrayList<String>(new HashSet<String>(dates));
 		Collections.sort(dates);
 		session.setAttribute("Dates",dates);
 		session.setAttribute("Pid", pid);

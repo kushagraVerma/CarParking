@@ -3,7 +3,7 @@ package com.carpark.model;
 import java.util.ArrayList;
 
 public class Worker {
-	int wid, pid, rateCount;
+	private int wid, pid, rateCount, numHrs;
 	float rating;
 	private String uname,pass,joined,services, fname;
 	public Worker(String UN) {
@@ -17,6 +17,12 @@ public class Worker {
 	}
 	public String getPass() {
 		return pass;
+	}
+	public int getNumHrs() {
+		return numHrs;
+	}
+	public void setNumHrs(int numHrs) {
+		this.numHrs = numHrs;
 	}
 	public void setPass(String pass) {
 		this.pass = pass;

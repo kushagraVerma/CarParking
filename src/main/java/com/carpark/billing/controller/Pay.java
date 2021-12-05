@@ -32,7 +32,7 @@ public class Pay extends HttpServlet {
 			ParkDAO pdao = new ParkDAO();
 			UserDAO udao = new UserDAO();
 			int Wid = pdao.getWid(Integer.parseInt(Pid));
-			pdao.removeBooking(Pid,Cout);
+			pdao.payBooking(Pid,Cout);
 			udao.changePromoCnt(u.getUid(),1);
 			if(uPromo.length()>0 && uPromo.equals(udao.getPromo(u.getUid()))) {
 				udao.removePromo(u.getUid());
