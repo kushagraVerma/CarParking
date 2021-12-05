@@ -85,4 +85,25 @@ public class LinkDAO implements DAO{
 			}
 		}
 	}
+	public void remove(int Wid) {
+		String sql = "delete from links where wid=? and link like '%'";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			st.setInt(1, Wid);
+			st.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

@@ -199,6 +199,27 @@ public class WorkerDAO implements DAO{
 			}
 		}
 	}
+	public void unassignParkspace(int Wid) {
+		String sql = "update workers set pid=NULL where wid=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			st.setInt(1, Wid);
+			st.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	public void removeWorker(int Wid) {
 		String sql = "delete from Workers where wid=?";
 		Connection con = null;
@@ -276,6 +297,33 @@ public class WorkerDAO implements DAO{
 		}
 		setRating(wid,rating,currRating,currRateCnt);
 		
+	}
+	public String getPid(int Wid) {
+		String sql = "select pid from Workers where wid=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		float currRating = -1;
+		int currRateCnt = -1;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+			st = con.prepareStatement(sql);
+			st.setInt(1, Wid);
+			ResultSet rs = st.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("pid")+"";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
 	}
 	public void updateServ(int Wid, String servStr) {
 		String sql = "update workers set services=? where wid=?";
