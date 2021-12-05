@@ -401,6 +401,27 @@ public class ParkDAO implements DAO {
 			}
 		}
 	}
+	public void unassignWorker(String Pid) {
+		String sql = "update parkspace set wid=NULL where pid=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url, username, password);
+			st = con.prepareStatement(sql);
+			st.setInt(1, Integer.parseInt(Pid));
+			st.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				st.close();
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public void removeParkspace(String Pid) {
 		String sql = "delete from parkspace where pid=?";

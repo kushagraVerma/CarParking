@@ -17,7 +17,7 @@ public class RemoveParkspace extends HttpServlet {
 		WorkerDAO wdao = new WorkerDAO();
 		String pid = request.getParameter("pid");
 		pdao.removeBooking(pid);
-		wdao.removeWorker(pdao.getWid(Integer.parseInt(pid)));
+		wdao.unassignParkspace(pdao.getWid(Integer.parseInt(pid)));
 		pdao.removeParkspace(pid);
 		response.sendRedirect("viewpark.jsp");
 	}
