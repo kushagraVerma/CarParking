@@ -21,7 +21,7 @@ public class VerifyOTP extends HttpServlet {
 		if(otp.equals(uOTP)) {
 			UserDAO udao = new UserDAO();
 			udao.addUser(u);
-			session.setAttribute("user", u);
+			session.setAttribute("user", udao.fromCreds(u.getUn(), u.getPw()));
 			session.removeAttribute("new-user");
 			session.removeAttribute("validated");
 			session.removeAttribute("OTP");

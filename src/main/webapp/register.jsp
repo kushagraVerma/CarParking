@@ -7,6 +7,10 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Register | Car Parking Solutions</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </head>
 <body>
 	<%! String fn=""; String ln=""; String un=""; String pw=""; String ad=""; String em=""; String ph=""; String cr=""; %>
@@ -23,27 +27,65 @@
 		if(u.getCarno()!=null) cr = u.getCarno();
 	}
 	%>
-	<form action="RegCred" method="post">
-		Enter first name: <input type="text" name="fname" value='<%= fn %>' maxlength="128" required>*<br>
-		Enter last name: <input type="text" name="lname" value='<%= ln %>' maxlength="128"><br>
-		Enter username: <input type="text" name="uname" value='<%= un %>' maxlength="128" required>*<br>
-		Enter password: <input type="password" name="pass" value='<%= pw %>' maxlength="64" required>*<br>
-		Confirm password: <input type="password" name="passCon" value="" maxlength="64" required>*<br>
-		Enter residential address: <input type="text" name="address" value='<%= ad %>' maxlength="1024"><br>
-		Enter email ID: <input type="email" name="email" value='<%= em %>' maxlength="64" required>*<br>
-		Enter mobile no.: <input type="tel" name="phno" value='<%= ph %>' maxlength="10" required>*<br>
-		Enter car registration no.: <input type="text" name="carno" value='<%= cr %>' maxlength="16" required>*<br>
-		<c:choose>
+<section class="vh-100" style="background-color: #508bfc;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+          <form class="form-sigin" action="RegCred" method="post">
+            <img class="mb-1 img-fluid" src="images/kasa-Logo.png" alt="" width="150px" height="150px">
+            <h3 class="mb-3 font-weight-bolder">Car Parking Solutions</h3>
+            <hr color="black">
+            <h4 class="mb-3">Register</h4>
+              <div class="form-outline mb-3">
+              <input type="text" id="typeuname" class="form-control form-control-lg" name="fname" value='<%= fn %>' maxlength="128" required autofocus />
+              <label class="form-label" for="typeuname">First Name</label>
+            </div>
+            <div class="form-outline mb-3">
+            <input type="text" id="typeuname" class="form-control form-control-lg" name="lname" value='<%= ln %>' maxlength="128"  />
+              <label class="form-label" for="typeuname">Last Name</label>
+            </div>
+            <div class="form-outline mb-3">
+            <input type="text" id="typeuname" class="form-control form-control-lg" name="uname" value='<%= un %>' maxlength="128"  required/>
+              <label class="form-label" for="typeuname">Username</label>
+            </div>
+            <div class="form-outline mb-3">
+            <input type="password" id="typeuname" class="form-control form-control-lg" name="pass" value='<%= pw %>' maxlength="64" required/>
+              <label class="form-label" for="typeuname">Password</label>
+            </div>
+            <div class="form-outline mb-3">
+            <input type="password" id="typeuname" class="form-control form-control-lg" name="passCon" value='' maxlength="64" required/>
+            <label class="form-label" for="typeuname">Confirm Password</label>
+            </div>
+            <div class="form-outline mb-3">
+            <input type="text" id="typeuname" class="form-control form-control-lg" name="address" value='<%= ad %>' maxlength="1024" required/>
+              <label class="form-label" for="typeuname">Address</label>
+            </div>
+            <div class="form-outline mb-3">
+              <input type="email" id="typeuname" class="form-control form-control-lg" name="email" value='<%= em %>' maxlength="64" required/>
+              <label class="form-label" for="typeuname">Email</label>
+            </div>
+            <div class="form-outline mb-3">
+              <input type="tel" id="typeuname" class="form-control form-control-lg" name="phno" value='<%= ph %>' maxlength="10" required />
+              <label class="form-label" for="typeuname">Mobile no.</label>
+            </div>
+            <div class="form-outline mb-3">
+            <input type="text" id="typeuname" class="form-control form-control-lg" name="carno" value='<%= cr %>' maxlength="16"  required/>
+              <label class="form-label" for="typeuname">Car Registration number</label>
+            </div>
+            
+            <c:choose>
 		    <c:when test="${OTP!=null}">
 		    </c:when>    
 		    <c:otherwise>
 			    <c:choose>
 				    <c:when test="${validated!=null}">
-						<input type="submit" name="emlOTP" value="EMAIL OTP">
-						<input type="submit" name="smsOTP" value="SMS OTP">
+				        <input class="btn btn-primary btn-lg btn-block" name="emlOTP" type="submit" value="Email OTP">
+						<input class="btn btn-primary btn-lg btn-block" name="smsOTP" type="submit" value="SMS OTP">
 				    </c:when>    
 				    <c:otherwise>
-						<input type="submit" name="val" value="VALIDATE">
+						<input class="btn btn-primary btn-lg btn-block" name="val" type="submit" value="Validate">
 				    </c:otherwise>
 				</c:choose>	
 		    </c:otherwise>
@@ -53,18 +95,29 @@
 		    <c:when test="${OTP!=null}">
 		    	<br>OTP has been sent!<br>
 		    	<form action="VerifyOTP" method="post">
-		    		<input type="text" name="uOTP">
-		    		<input type="submit" value="VERIFY OTP">
+		    		<div class="form-outline mb-3">
+                    <input type="text" id="typeuname" class="form-control form-control-lg" name="uOTP" required/>
+                    <label class="form-label" for="typeuname">Enter OTP</label>
+                    </div>
+		    		<input class="btn btn-primary btn-lg btn-block" type="submit" value="Verify OTP">
 		    	</form>
 		    </c:when>
 		</c:choose>
-	<div><%
+       <div><%
 		String inval = (String) session.getAttribute("invalid-reg");
 		if(inval!=null){
 			out.println(inval);
 			session.removeAttribute("invalid-reg");
 		}
-	%></div><br>
+	%></div><br>   
+
+
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 </body>
 </html>

@@ -243,7 +243,7 @@ public class ParkDAO implements DAO {
 	}
 
 	public ArrayList<Park> getBookings(int Uid) {
-		String sql = "select booking.pid as parkid,loc,cin,cout from booking,parkspace "
+		String sql = "select booking.pid as parkid,loc,cin,cout,paid from booking,parkspace "
 				+ "where booking.pid=parkspace.pid and uid=?";
 		Connection con = null;
 		PreparedStatement st = null;
@@ -257,6 +257,7 @@ public class ParkDAO implements DAO {
 			while (rs.next()) {
 				Park p = new Park(rs.getString("loc"), rs.getString("cin"), rs.getString("cout"));
 				p.setPID(rs.getString("parkid"));
+				p.setEmt(rs.getInt("paid"));
 				bookings.add(p);
 			}
 			return bookings;
@@ -444,7 +445,28 @@ public class ParkDAO implements DAO {
 			}
 		}
 	}
-
+	public void payBooking(String Pid, String Cout) {
+		String sql = "update booking set paid=1 where pid=? and cout=?";
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url, username, password);
+			st = con.prepareStatement(sql);
+			st.setInt(1, Integer.parseInt(Pid));
+			st.setString(2, Cout);
+			st.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				st.close();
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	public void removeBooking(String Pid, String Cout) {
 		String sql = "delete from booking where pid=? and cout=?";
 		Connection con = null;

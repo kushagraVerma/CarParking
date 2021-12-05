@@ -92,6 +92,8 @@ public class Park {
 		}
 		if(WaitingTime < 0)
 			WaitingTime = 0;
+		else
+			WaitingTime = (int) Math.ceil(((double)WaitingTime)/60);
 //		System.out.println(WaitingTime);
 		return WaitingTime;
 	}

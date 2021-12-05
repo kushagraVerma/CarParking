@@ -14,7 +14,7 @@ public class AdmLogout extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.removeAttribute("admin");
 		session.invalidate();
-		response.sendRedirect("admlogin.jsp");
+		response.sendRedirect("Landing.html");
 	}
 
 }
